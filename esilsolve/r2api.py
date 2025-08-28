@@ -17,6 +17,7 @@ class R2API:
     def __init__(self, r2p=None, filename=None, flags=["-2"], 
         pcode=False, load_libs=False, lib_dir=None):
 
+
         self.r2p = r2p
         if r2p == None:
             #self.r2p = r2pipe.open(filename, flags=flags)
@@ -67,8 +68,19 @@ class R2API:
 
             if "/usb/" in info["core"]["file"]:
                 self.device = frida.get_usb_device()
+
+
+            elif "/remote/" in info["core"]["file"]:
+
+                myip = info["core"]["file"].split("remote/")
+                myip = myip[1].split(":")
+                myip = myip[0]
+                print(f"IP remotezzzzzzzzzzzzzz: {myip}")
+                self.device = frida.get_device_manager().add_remote_device(myip)
+
             else:
                 self.device = frida.get_local_device()
+
 
             for dev in frida.enumerate_devices():
                 if dev.id in info["core"]["file"]:
