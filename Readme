@@ -1,0 +1,4 @@
+using:
+
+- radare2 5.6.2
+- frida 15.1.17
